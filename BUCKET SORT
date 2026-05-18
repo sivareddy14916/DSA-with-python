@@ -23,8 +23,8 @@ def bucketsort(arr):
     buckets = [[] for _ in range(number_of_buckets)]
         
     for num in arr:
-        index = math.ceil((num) * (number_of_buckets ) / max_value)
-        buckets[index-1].append(num)
+        index = ((num) * (number_of_buckets ) // max_value+1)
+        buckets[index].append(num)
     
     # Sort each bucket and concatenate the result
     sorted_array = []
