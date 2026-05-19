@@ -1,39 +1,38 @@
-import math
 def insertionsort(arr):
     n=len(arr)
+    #loop starts from 1 which means from unsorted array and assume index 0 as sorted
     for i in range(1,n):
-        key=arr[i]    #
-        j=i-1         #previous element before key
-        while j>=0 and key<arr[j]:
+        #take first element from unsorted array
+        temp=arr[i]
+        #element from sorted array behind i
+        j=i-1
+        #value in sorted is greater with temp and check for other elements in sorted array
+        while j>=0 and arr[j]>temp:
+            #shifts to right which means assign right value to left 
             arr[j+1]=arr[j]
-            j-=1 
-        arr[j+1]=key
-        
-    
-arr=[2,3,6,1,4,8,9,5,7]        
+            #decrement of j to check all values for other in sorted
+            j-=1
+        #if condition with either temp is small or no element in j
+        #update
+        arr[j+1]=temp       
+    return arr
 
+import math
 def bucketsort(arr):
-    if len(arr) == 0:
+    n=len(arr)
+    if n==0:
         return arr
-
-    number_of_buckets = round(math.sqrt(len(arr)))
-    max_value = max(arr)
-
-    # Initialize buckets
-    buckets = [[] for _ in range(number_of_buckets)]
-        
-    for num in arr:
-        index = ((num) * (number_of_buckets ) // max_value+1)
-        buckets[index].append(num)
+    num_of_buckets=round(math.sqrt(n))
+    max_value=max(arr)
+    buckets=[[] for _ in range(num_of_buckets)]
     
-    # Sort each bucket and concatenate the result
-    sorted_array = []
+    for i in arr:
+        #respective_bucket=((i)*(num_of_buckets)//max_value)+1
+        respective_bucket=(i*num_of_buckets)//(max_value+1)
+        buckets[respective_bucket].append(i)
+
+    sorted_array=[]
     for bucket in buckets:
         insertionsort(bucket)
         sorted_array.extend(bucket)
-    
     return sorted_array
-
-arr = [2, 3, 6, 1, 4, 8, 9, 5, 7]
-print(bucketsort(arr))
-
